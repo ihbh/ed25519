@@ -46,11 +46,9 @@
   class Ed25519 {
     constructor(_ed25519) {
       wasm = _ed25519();
-      console.log('wasm:', wasm);
 
       ready = new Promise(resolve => {
         wasm.then(() => {
-          console.log('wasm.ready');
           ready = null;
           resolve();
         });
