@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0",
+  "name": "ed25519.wasm",
+  "description": "A wasm build of orlp/ed25519",
+  "main": "index.js", 
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "./build.sh",
+    "test": "npm run build && node test"
+  },
+  "repository": {
+    "url": "https://github.com/ihbh/ed25519"
+  }
+}

@@ -2,6 +2,10 @@
   const IS_AMD_MODULE = typeof define == 'function' && define['amd'];
   const IS_NODE_JS = typeof module == 'object' && module.exports;
 
+  const NODE_WASM_JS = './dist/wasm';
+  const WEB_GLOBAL_EXPORT = 'ed25519';
+  const WEB_GLOBAL_IMPORT = '_ed25519';
+
   const SEED_LEN = 32;
   const PUB_KEY_LEN = 32;
   const SEC_KEY_LEN = 64;
@@ -133,9 +137,10 @@
   if (IS_AMD_MODULE) {
     define(new Ed25519());
   } else if (IS_NODE_JS) {
-    let wasm = require('./.bin/wasm');
+    let wasm = require(NODE_WASM_JS);
     module.exports = new Ed25519(wasm);
   } else {
-    window['ed25519'] = new Ed25519(_ed25519);
+    window[WEB_GLOBAL_EXPORT] =
+      new Ed25519(window[WEB_GLOBAL_IMPORT]);
   }
 })();
