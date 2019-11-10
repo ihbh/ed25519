@@ -146,7 +146,7 @@
   }
 
   if (IS_AMD_MODULE) {
-    define(new Ed25519());
+    define(['./dist/wasm'], wasm => new Ed25519(wasm));
   } else if (IS_NODE_JS) {
     let wasm = require(NODE_WASM_JS);
     module.exports = new Ed25519(wasm);
