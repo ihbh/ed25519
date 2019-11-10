@@ -8,16 +8,14 @@ emcc src/*.c \
   -DED25519_NO_SEED \
   -o dist/wasm.js \
   -s EXPORT_NAME='_ed25519' \
+  -s EXPORTED_FUNCTIONS=['_malloc','_free'] \
+  -s MALLOC=emmalloc \
   -s MODULARIZE=1 \
   -Oz \
-  -s DYNAMIC_EXECUTION=0 \
   -s STRICT=1 \
-  -s DEFAULT_LIBRARY_FUNCS_TO_INCLUDE=[] \
-  -s LIBRARY_DEPS_TO_AUTOEXPORT=[] \
   -s FILESYSTEM=0 \
   -s TOTAL_MEMORY=65536 \
-  -s TOTAL_STACK=1024 \
-  -s GLOBAL_BASE=1024 \
+  -s TOTAL_STACK=8192 \
 
 ls -l .bin
 ls -l dist

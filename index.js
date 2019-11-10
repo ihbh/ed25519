@@ -13,18 +13,30 @@
   const MSG_LEN = 64; // sha512(message)
   const SIG_LEN = 64;
 
-  // -s GLOBAL_BASE=1024 or use malloc()
-  // to avoid memory corruption
   const MEM_BLOCK = 64;
-  const SEED_PTR = 1 * MEM_BLOCK;
-  const PUB_KEY_PTR = 2 * MEM_BLOCK;
-  const SEC_KEY_PTR = 3 * MEM_BLOCK;
-  const MSG_PTR = 4 * MEM_BLOCK;
-  const SIG_PTR = 5 * MEM_BLOCK;
-  const SHR_SEC_PTR = 6 * MEM_BLOCK;
+
+  let SEED_PTR = 0;
+  let PUB_KEY_PTR = 0;
+  let SEC_KEY_PTR = 0;
+  let MSG_PTR = 0;
+  let SIG_PTR = 0;
+  let SHR_SEC_PTR = 0;
 
   let wasm = null;
   let ready = null;
+
+  function balloc() {
+    return wasm._malloc(MEM_BLOCK);
+  }
+
+  function initMemBuffers() {
+    SEED_PTR = balloc();
+    PUB_KEY_PTR = balloc();
+    SEC_KEY_PTR = balloc();
+    MSG_PTR = balloc();
+    SIG_PTR = balloc();
+    SHR_SEC_PTR = balloc();
+  }
 
   function check(array, length, name) {
     if (!(array instanceof Uint8Array))
@@ -49,6 +61,7 @@
 
       ready = new Promise(resolve => {
         wasm.then(() => {
+          initMemBuffers();
           ready = null;
           resolve();
         });
