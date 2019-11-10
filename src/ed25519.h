@@ -3,6 +3,10 @@
 
 #include <stddef.h>
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#endif
+
 #if defined(_WIN32)
     #if defined(ED25519_BUILD_DLL)
         #define ED25519_DECLSPEC __declspec(dllexport)
@@ -11,6 +15,8 @@
     #else
         #define ED25519_DECLSPEC
     #endif
+#elif defined(__EMSCRIPTEN__)
+    #define ED25519_DECLSPEC EMSCRIPTEN_KEEPALIVE
 #else
     #define ED25519_DECLSPEC
 #endif
