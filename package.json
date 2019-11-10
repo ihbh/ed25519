@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.1",
   "name": "ed25519.wasm",
   "description": "A wasm build of orlp/ed25519",
   "main": "index.js", 
